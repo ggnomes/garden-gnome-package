@@ -1,0 +1,98 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Garden Gnome Package\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2019-05-27 17:14+0200\n"
+"PO-Revision-Date: 2019-05-27 17:38+0200\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: ggpkg.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: ggpkg.php:101
+#: ggpkg.php:215
+msgid "The PHP Zip extension is not installed on your server. Without it the Garden Gnome Package plugin will not work. Please contact your server administrator."
+msgstr "Die PHP-Zip-Erweiterung ist nicht auf Ihrem Server installiert. Ohne sie wird das Garden Gnome Package-Plugin nicht funktionieren. Bitte wenden Sie sich an Ihren Server-Administrator."
+
+#: ggpkg.php:104
+#: ggpkg.php:218
+msgid "The libxml extension is not installed on your server. Without it the Garden Gnome Package plugin will not work. Please contact your server administrator."
+msgstr "Die libxml-Erweiterung ist nicht auf Ihrem Server installiert. Ohne sie wird das Garden Gnome Package-Plugin nicht funktionieren. Bitte wenden Sie sich an Ihren Server-Administrator."
+
+#. Plugin Name of the plugin/theme
+#: ggpkg.php:207
+#: ggpkg.php:241
+msgid "Garden Gnome Package"
+msgstr "Garden-Gnome-Paket"
+
+#: ggpkg.php:233
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
+
+#: ggpkg.php:235
+msgid "Settings could not be saved."
+msgstr "Einstellungen konnten nicht gespeichert werden."
+
+#: ggpkg.php:245
+msgid "Default Player Size"
+msgstr "Standard Anzeigegröße"
+
+#: ggpkg.php:247
+msgid "Width"
+msgstr "Breite"
+
+#: ggpkg.php:250
+msgid "Height"
+msgstr "Höhe"
+
+#: ggpkg.php:257
+msgid "Start player as preview image"
+msgstr "Starte als Vorschau-Bild"
+
+#: ggpkg.php:269
+#: ggpkg.php:294
+msgid "Player Version"
+msgstr "Softwareversion"
+
+#: ggpkg.php:273
+msgid "from package"
+msgstr "vom Paket"
+
+#: ggpkg.php:336
+msgid "General Settings"
+msgstr "Allgemeine Einstellungen"
+
+#: ggpkg.php:358
+msgid "Garden Gnome Package Documentation"
+msgstr "Garten-Gnome-Paket Dokumentation"
+
+#: ggpkg.php:365
+msgid "Settings"
+msgstr "Einstellungen"
+
+#. Plugin URI of the plugin/theme
+msgid "https://ggnome.com/ggpkg"
+msgstr "https://ggnome.com/ggpkg"
+
+#. Description of the plugin/theme
+msgid "Import Pano2VR & Object2VR Content into Wordpress."
+msgstr "Import von Pano2VR & Objekt2VR-Inhalten in Wordpress."
+
+#. Author of the plugin/theme
+msgid "<a href=\"https://ggnome.com\">Garden Gnome Software</a>"
+msgstr "<a href=\"https://ggnome.com\">Garden Gnome Software</a>"
+
+#, fuzzy
+#~ msgid "from GGPKG"
+#~ msgstr "GGPKG"
