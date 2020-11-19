@@ -203,7 +203,7 @@ class GGPackage {
 		}
 		$this->json = $json;
 		$json_type  = $json->{'type'};
-		if ( isset( $json_type ) ) {
+		if ( isset( $json->type ) ) {
 			// only newer player version have the async function, but they where introduced at the same time as as the json file in the package
 			$this->use_async = true;
 			$this->is_pano   = ( $json_type == 'panorama' );
@@ -215,32 +215,18 @@ class GGPackage {
 				$this->xml_file = "object.xml";
 			}
 		}
-		$json_player = $json->{'player'};
-		if ( isset( $json_player ) ) {
-			$json_js_player = $json_player->{'js'};
-			if ( isset( $json_js_player ) ) {
-				$this->player_file = $json_js_player;
-			}
+		if ( isset( $json->player ) && isset( $json->player->js ) ) {
+			$this->player_file = $json->player->js;
 		}
-		$json_skin = $json->{'skin'};
-		if ( isset( $json_skin ) ) {
-			$json_skin_file = $json_skin->{'js'};
-			if ( isset( $json_skin_file ) ) {
-				$this->skin_file = $json_skin_file;
-			}
+		if ( isset( $json->skin ) && isset( $json->skin->js ) ) {
+			$this->skin_file = $json->skin->js;
 		}
-		$json_translations = $json->{'translations'};
-		if ( isset( $json_translations ) ) {
-			$json_translations_file = $json_translations->{'js'};
-			if ( isset( $json_translations_file ) ) {
-				$this->translations_file = $json_translations_file;
-			}
+		if ( isset( $json->translations ) && isset( $json->translations->js ) ) {
+			$this->translations_file = $json->translations->js;
 		}
-		$json_preview = $json->{'preview'};
-		if ( isset( $json_preview ) ) {
-			$json_preview_file = $json_preview->{'img'};
-			if ( isset( $json_preview_file ) ) {
-				$this->preview_file = $json_preview_file;
+		if ( isset( $json->preview ) ) {
+			if ( isset( $json->preview->img ) ) {
+				$this->preview_file = $json->preview->img;
 			} else {
 //				$attributes['start_preview'] = 'false';
 			}
