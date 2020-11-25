@@ -1,6 +1,5 @@
 <?php
 
-
 class GGPackage {
 
 	private $attachment_id;
@@ -202,8 +201,8 @@ class GGPackage {
 			return;
 		}
 		$this->json = $json;
-		$json_type  = $json->{'type'};
-		if ( isset( $json_type ) ) {
+		if ( isset( $json->{'type'} ) ) {
+			$json_type  = $json->{'type'};
 			// only newer player version have the async function, but they where introduced at the same time as as the json file in the package
 			$this->use_async = true;
 			$this->is_pano   = ( $json_type == 'panorama' );
@@ -215,29 +214,29 @@ class GGPackage {
 				$this->xml_file = "object.xml";
 			}
 		}
-		$json_player = $json->{'player'};
-		if ( isset( $json_player ) ) {
+		if ( isset( $json->{'player'} ) ) {
+			$json_player = $json->{'player'};
 			$json_js_player = $json_player->{'js'};
 			if ( isset( $json_js_player ) ) {
 				$this->player_file = $json_js_player;
 			}
 		}
-		$json_skin = $json->{'skin'};
-		if ( isset( $json_skin ) ) {
+		if ( isset( $json->{'skin'} ) ) {
+			$json_skin = $json->{'skin'};
 			$json_skin_file = $json_skin->{'js'};
 			if ( isset( $json_skin_file ) ) {
 				$this->skin_file = $json_skin_file;
 			}
 		}
-		$json_translations = $json->{'translations'};
-		if ( isset( $json_translations ) ) {
+		if ( isset($json->{'translations'}) ) {
+			$json_translations = $json->{'translations'};
 			$json_translations_file = $json_translations->{'js'};
 			if ( isset( $json_translations_file ) ) {
 				$this->translations_file = $json_translations_file;
 			}
 		}
-		$json_preview = $json->{'preview'};
-		if ( isset( $json_preview ) ) {
+		if ( isset( $json->{'preview'} ) ) {
+			$json_preview = $json->{'preview'};
 			$json_preview_file = $json_preview->{'img'};
 			if ( isset( $json_preview_file ) ) {
 				$this->preview_file = $json_preview_file;
@@ -265,7 +264,7 @@ class GGPackage {
 							wp_enqueue_script( 'js_' . $this->attachment_id . '_' . $index, $js_file );
 						} else {
 							if ( ( substr( $js_file, 0, 6 ) == 'webvr/' ) ||
-							     ( substr( $js_file, 0, 6 ) == 'webxr/' ) ) { // only load the webvr scripts from one source
+								( substr( $js_file, 0, 6 ) == 'webxr/' ) ) { // only load the webvr scripts from one source
 								wp_enqueue_script( 'js_g_' . $js_file, $this->to_url( $js_file ) );
 							} else {
 								wp_enqueue_script( 'js_' . $this->attachment_id . '_' . $index, $this->to_url( $js_file ) );
@@ -326,11 +325,11 @@ class GGPackage {
 		}
 		$html .= "</div>\n";
 		if ( ( $this->remote_url == "" ) && ( $this->is_pano ) && ( $this->pano_player_version != "package" ) // Remote packages should load the remote player to avoid CORS trouble.
-		     && ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "pano2vr_player/" . $this->pano_player_version . "/pano2vr_player.js" ) ) ) {
+			&& ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "pano2vr_player/" . $this->pano_player_version . "/pano2vr_player.js" ) ) ) {
 			wp_enqueue_script( 'js_ggsw_pano2vr_player', plugin_dir_url( dirname( __FILE__ ) ) . "pano2vr_player/" . $this->pano_player_version . "/pano2vr_player.js" );
 
 		} elseif ( ( $this->remote_url == "" ) && ( $this->is_object ) && ( $this->object_player_version != "package" )
-		           && ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "object2vr_player/" . $this->object_player_version . "/object2vr_player.js" ) ) ) {
+			&& ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "object2vr_player/" . $this->object_player_version . "/object2vr_player.js" ) ) ) {
 			wp_enqueue_script( 'js_ggsw_object2vr_player', plugin_dir_url( dirname( __FILE__ ) ) . "object2vr_player/" . $this->object_player_version . "/object2vr_player.js" );
 		} else {
 			$html .= "<script type='text/javascript' src='" . $this->to_url( $this->player_file ) . "'></script>\n";
