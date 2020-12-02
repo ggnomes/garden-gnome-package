@@ -2,7 +2,7 @@
 Contributors: Ggnomes
 Tags: panorama, pano, virtual tour, webvr, pano2vr, object2vr
 Requires at least: 5.0
-Tested up to: 5.5.0
+Tested up to: 5.6.0
 Stable tag: trunk
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -74,7 +74,9 @@ Please see the [Pano2VR documentation](https://ggnome.com/doc/pano2vr/6/cms-plug
 
 ### How can I upload a tour with a large file size? 
 
-There are two strategies:
+The easiest solution is to install the excellent [Tuxedo Big File Uploads](https://wordpress.org/plugins/tuxedo-big-file-uploads/) plugin.
+
+There are two strategies without an additional plugin:
 
 - Upload the tour to a folder on a web server and use the shortcode `[ggpkg url="https://example.com/my_tour_folder/"]` to point to the tour.
 

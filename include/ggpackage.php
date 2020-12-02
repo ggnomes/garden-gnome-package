@@ -1,6 +1,5 @@
 <?php
 
-
 class GGPackage {
 
 	private $attachment_id;
@@ -251,7 +250,7 @@ class GGPackage {
 							wp_enqueue_script( 'js_' . $this->attachment_id . '_' . $index, $js_file );
 						} else {
 							if ( ( substr( $js_file, 0, 6 ) == 'webvr/' ) ||
-							     ( substr( $js_file, 0, 6 ) == 'webxr/' ) ) { // only load the webvr scripts from one source
+								( substr( $js_file, 0, 6 ) == 'webxr/' ) ) { // only load the webvr scripts from one source
 								wp_enqueue_script( 'js_g_' . $js_file, $this->to_url( $js_file ) );
 							} else {
 								wp_enqueue_script( 'js_' . $this->attachment_id . '_' . $index, $this->to_url( $js_file ) );
@@ -312,11 +311,11 @@ class GGPackage {
 		}
 		$html .= "</div>\n";
 		if ( ( $this->remote_url == "" ) && ( $this->is_pano ) && ( $this->pano_player_version != "package" ) // Remote packages should load the remote player to avoid CORS trouble.
-		     && ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "pano2vr_player/" . $this->pano_player_version . "/pano2vr_player.js" ) ) ) {
+			&& ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "pano2vr_player/" . $this->pano_player_version . "/pano2vr_player.js" ) ) ) {
 			wp_enqueue_script( 'js_ggsw_pano2vr_player', plugin_dir_url( dirname( __FILE__ ) ) . "pano2vr_player/" . $this->pano_player_version . "/pano2vr_player.js" );
 
 		} elseif ( ( $this->remote_url == "" ) && ( $this->is_object ) && ( $this->object_player_version != "package" )
-		           && ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "object2vr_player/" . $this->object_player_version . "/object2vr_player.js" ) ) ) {
+			&& ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "object2vr_player/" . $this->object_player_version . "/object2vr_player.js" ) ) ) {
 			wp_enqueue_script( 'js_ggsw_object2vr_player', plugin_dir_url( dirname( __FILE__ ) ) . "object2vr_player/" . $this->object_player_version . "/object2vr_player.js" );
 		} else {
 			$html .= "<script type='text/javascript' src='" . $this->to_url( $this->player_file ) . "'></script>\n";
