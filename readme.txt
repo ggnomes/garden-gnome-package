@@ -2,7 +2,7 @@
 Contributors: Ggnomes
 Tags: panorama, pano, virtual tour, webvr, pano2vr, object2vr
 Requires at least: 5.0
-Tested up to: 5.6.0
+Tested up to: 5.7.0
 Stable tag: trunk
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -82,6 +82,10 @@ There are two strategies without an additional plugin:
 
 - Upload a small version of the tour (i.e., just the start node) and then replace the files in the extracted folder in the upload directory.
 
+### How can contribute? 
+
+Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome-package).
+
 ## Screenshots
 
 1. Embedded virtual tour
@@ -90,6 +94,15 @@ There are two strategies without an additional plugin:
 4. Shortcode in classic editor
 
 ## Changelog
+
+### 2.2.4
+* Fix for centered preview button
+
+### 2.2.3
+* Fix warnings in JSON parser
+
+### 2.2.2
+* Forces CSS line-height to 1.0 in skins
 
 ### 2.2.2
 * Forces CSS line-height to 1.0 in skins

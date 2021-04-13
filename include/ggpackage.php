@@ -213,13 +213,13 @@ class GGPackage {
 				$this->xml_file = "object.xml";
 			}
 		}
-		if ( isset( $json->player ) && isset( $json->player->js ) {
+		if ( isset( $json->player ) && isset( $json->player->js ) ) {
 			$this->player_file = $json->player->js;
 		}
-		if ( isset( $json->skin ) && isset( $json->skin->js ) {
+		if ( isset( $json->skin ) && isset( $json->skin->js ) ) {
 			$this->skin_file = $json->skin->js;
 		}
-		if ( isset( $json->translations ) && isset( $json->translations->js ) {
+		if ( isset( $json->translations ) && isset( $json->translations->js ) ) {
 			$this->translations_file = $json->translations->js;
 		}
 		if ( isset( $json->preview ) ) {
@@ -294,13 +294,13 @@ class GGPackage {
 				if ( substr( $height, - 1 ) == '%' ) {
 					$html .= "top: 50%; margin-top: -90px; left: 50%; margin-left: -90px;";
 				} else {
-					$html .= "top: " . strval( $height / 2 - 90 ) . "px; left: 50%; margin-left: -90px;";
+					$html .= "top: calc(".$height." / 2 - 90px); left: 50%; margin-left: -90px;";
 				}
 			} else {
 				if ( substr( $height, - 1 ) == '%' ) {
 					$html .= "top: 50%; margin-top: -90px; left: " . strval( $width / 2 - 90 ) . "px;";
 				} else {
-					$html .= "top: " . strval( $height / 2 - 90 ) . "px; left: " . strval( $width / 2 - 90 ) . "px;";
+					$html .= "top: calc(".$height." / 2 - 90px); left: " . strval( $width / 2 - 90 ) . "px;";
 				}
 			}
 			$html .= "box-shadow: none; position: absolute;'>\n";
