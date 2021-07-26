@@ -283,27 +283,17 @@ class GGPackage {
 		}
 		$html = "<div id='ggpkg_container" . $ID . "' style='width:" . $width . "; height:" . $height . "; position: relative;'>\n";
 		if ( $this->use_preview ) {
-			$html .= "<div style='width:100%; height:100%; overflow: hidden; position:relative;'>\n";
+			$html .= "<div style='width:100%; height:100%; overflow: hidden; position:relative; display:flex; justify-content:center; align-items:center;'>\n";
 			if ( $this->preview_file ) {
-				$html .= "<img src='" . $this->to_url( $this->preview_file ) . "' alt='' onclick='startPlayer" . $ID . "();' style='min-width:100%; max-width: 10000px; min-height: 100%; max-height: 10000px; position: absolute;'>\n";
+				if ( $this->is_object ) {
+					$html .= "<img src='" . $this->to_url( $this->preview_file ) . "' alt='' onclick='startPlayer" . $ID . "();' style='max-width: 100%; max-height: 100%; position: absolute;'>\n";
+				} else {
+					$html .= "<img src='" . $this->to_url( $this->preview_file ) . "' alt='' onclick='startPlayer" . $ID . "();' style='min-width:100%; max-width: 10000px; min-height: 100%; max-height: 10000px; position: absolute;'>\n";
+				}
 			}
 			if ( $this->show_play_button ) {
-				$html .= "<img src='" . $this->url_from_local( plugin_dir_url( __FILE__ ) . "play.png" ) . "' alt='' onclick='startPlayer" . $ID . "();' style='width: 180px; height: 180px; display: block;";
+				$html .= "<img src='" . $this->url_from_local( plugin_dir_url( __FILE__ ) . "play.png" ) . "' alt='' onclick='startPlayer" . $ID . "();' style='width: 180px; height: 180px; z-index:10; display: block;'>\n";
 			}
-			if ( substr( $width, - 1 ) == '%' ) {
-				if ( substr( $height, - 1 ) == '%' ) {
-					$html .= "top: 50%; margin-top: -90px; left: 50%; margin-left: -90px;";
-				} else {
-					$html .= "top: calc(".$height." / 2 - 90px); left: 50%; margin-left: -90px;";
-				}
-			} else {
-				if ( substr( $height, - 1 ) == '%' ) {
-					$html .= "top: 50%; margin-top: -90px; left: " . strval( $width / 2 - 90 ) . "px;";
-				} else {
-					$html .= "top: calc(".$height." / 2 - 90px); left: " . strval( $width / 2 - 90 ) . "px;";
-				}
-			}
-			$html .= "box-shadow: none; position: absolute;'>\n";
 			$html .= "</div>\n";
 		} else {
 			$html .= "Loading...\n";
