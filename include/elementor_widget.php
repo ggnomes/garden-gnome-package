@@ -16,7 +16,7 @@ class Elementor_GGPKG_Widget extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'fa fa-box-open';
+		return 'eicon-image';;
 	}
 
 	public function get_categories() {

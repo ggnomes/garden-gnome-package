@@ -2,7 +2,7 @@
 Contributors: Ggnomes
 Tags: panorama, pano, virtual tour, webvr, pano2vr, object2vr
 Requires at least: 5.0
-Tested up to: 5.7.0
+Tested up to: 5.9.0
 Stable tag: trunk
 Requires PHP: 5.6
 License: GPLv2 or later

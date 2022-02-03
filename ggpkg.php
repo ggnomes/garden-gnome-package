@@ -20,7 +20,7 @@
  * Plugin Name: Garden Gnome Package
  * Plugin URI:  https://ggnome.com/ggpkg
  * Description: Import Pano2VR & Object2VR Content into Wordpress.
- * Version:     2.2.4
+ * Version:     2.2.5
  * Author:      <a href="https://ggnome.com">Garden Gnome Software</a>
  ************************************************************************/
 
@@ -657,7 +657,7 @@ class GGPackageViewer {
 
 	public function shortcode( $attributes ) {
 		global $post;
-		$attachmentID = $attributes['id'];
+		$attachmentID = isset($attributes['id'])?$attributes['id']:false;
 		$package      = new GGPackage( $this );
 
 		if ( isset( $attributes['url'] ) ) {
