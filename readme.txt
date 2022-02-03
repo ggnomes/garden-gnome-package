@@ -95,6 +95,9 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 
 ## Changelog
 
+### 2.2.5
+* Fix for Elementor icon and version bump
+
 ### 2.2.4
 * Fix for centered preview button
 
