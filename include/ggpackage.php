@@ -385,9 +385,21 @@ class GGPackage {
 				$html .= $play_js;
 				$html .= "}\n";
 			}
-		} else {
-			$html .= "window.addEventListener('load',function() {\n" . $play_js . "\n});\n";
-		}
+        } else {
+            /**
+             * The global variable may be used in custom event from others tools.
+             * For exemple, Barba :
+             * Barba.Dispatcher.on('newPageReady', function() {
+             *      window.ggnome.startPlay.foreEach(starPlay=>startPlay());
+             * });
+             */
+            $html .= "if(typeof(window.ggnome) === 'undefined'){window.ggnome  = {};}\n";
+            $html .= "if(typeof(window.ggnome.startPlay ) === 'undefined'){window.ggnome.startPlay   = new Array();}\n";
+            $html .= "window.ggnome.startPlay.push(function(){\n $play_js \n});\n";
+            $html .= "window.ggnome.startPlay.forEach((startPlay)=>{\n";
+            $html .= "  window.addEventListener('load',startPlay);\n";
+            $html .= "});";
+        }
 		$html .= "</script>\n";
 
 		return $html;

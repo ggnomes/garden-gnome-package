@@ -231,7 +231,7 @@ class GGPackageViewer {
 			$this->options = array(
 				'width'                    => sanitize_text_field( $_POST['ggsw_player_size_w'] ),
 				'height'                   => sanitize_text_field( $_POST['ggsw_player_size_h'] ),
-				'start_preview'            => sanitize_text_field( $_POST['ggsw_player_start_preview'] ),
+				'start_preview'            => isset($_POST['ggsw_player_start_preview']) ? sanitize_text_field( $_POST['ggsw_player_start_preview'] ) : false,
 				'pano2vr_player_version'   => sanitize_text_field( $_POST['ggsw_pano2vr_player_version'] ),
 				'object2vr_player_version' => sanitize_text_field( $_POST['ggsw_object2vr_player_version'] )
 			);
