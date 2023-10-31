@@ -33,10 +33,14 @@ class GGPackage {
 		if ( isset( $viewer ) && isset( $viewer->options ) ) {
 			$options = $viewer->options;
 			if ( isset( $options['width'] ) ) {
-				$this->width = $options['width'];
+				if (preg_match( "/((\d+)(\w{0,5}))$/", $options['width'])) {
+					$this->width = $options['width'];
+				}
 			}
 			if ( isset( $options['height'] ) ) {
-				$this->height = $options['height'];
+				if (preg_match( "/((\d+)(\w{0,5}))$/", $options['height'])) {
+					$this->height = $options['height'];
+				}
 			}
 			$this->use_preview           = $options['start_preview'] === 'on';
 			$this->pano_player_version   = $options['pano2vr_player_version'];

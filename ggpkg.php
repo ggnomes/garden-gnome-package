@@ -20,7 +20,7 @@
  * Plugin Name: Garden Gnome Package
  * Plugin URI:  https://ggnome.com/ggpkg
  * Description: Import Pano2VR & Object2VR Content into Wordpress.
- * Version:     2.2.5
+ * Version:     2.2.6
  * Author:      <a href="https://ggnome.com">Garden Gnome Software</a>
  ************************************************************************/
 
@@ -156,10 +156,10 @@ class GGPackageViewer {
 
 		if ( isset( $attachmentID ) && ( $this->attachment_is_package( $attachmentID ) ) ) {
 			$package = new GGPackage( $this, $attachmentID );
-			if ( isset( $block_attributes['width'] ) && ( preg_match( "/((\d+)(\w{0,5}))/", $block_attributes['width'] ) ) ) {
+			if ( isset( $block_attributes['width'] ) && ( preg_match( "/((\d+)(\w{0,5}))$/", $block_attributes['width'] ) ) ) {
 				$package->width = $block_attributes['width'];
 			}
-			if ( isset( $block_attributes['height'] ) && ( preg_match( "/((\d+)(\w{0,5}))/", $block_attributes['height'] ) ) ) {
+			if ( isset( $block_attributes['height'] ) && ( preg_match( "/((\d+)(\w{0,5}))$/", $block_attributes['height'] ) ) ) {
 				$package->height = $block_attributes['height'];
 			}
 			if ( isset( $block_attributes['startPreview'] ) ) {
@@ -360,12 +360,12 @@ class GGPackageViewer {
 
 	public function import_validate_options( $input ) {
 		$valid = array();
-		if ( preg_match( "/((\d+)(\w{0,5}))/", $input['width'] ) ) {
+		if ( preg_match( "/((\d+)(\w{0,5}))$/", $input['width'] ) ) {
 			$valid['width'] = strval( $input['width'] );
 		} else {
 			$valid['width'] = '640';
 		}
-		if ( preg_match( "/((\d+)(\w{0,5}))/", $input['height'] ) ) {
+		if ( preg_match( "/((\d+)(\w{0,5}))$/", $input['height'] ) ) {
 			$valid['height'] = strval( $input['height'] );
 		} else {
 			$valid['height'] = '480';
@@ -470,7 +470,7 @@ class GGPackageViewer {
 								if ( file_exists( $extract_path . "/" . $sw . "_player.js" ) ) {
 									$lines = file( $extract_path . "/" . $sw . "_player.js" );
 									if ( isset( $lines[1] ) ) {
-										preg_match( "/.*\s(\d\.\w+(\.[\w|\ ]+)?).*/", $lines[1], $matches );
+										preg_match( "/.*\s(\d\.\w+(\.[\w|\ ]+)?).*$/", $lines[1], $matches );
 										if ( isset( $matches[1] ) ) {
 											$player_version = $matches[1];
 										}
@@ -677,16 +677,24 @@ class GGPackageViewer {
 			$package->use_preview = $this->attribute_set_true( $attributes['start_preview'] );
 		}
 		if ( isset( $attributes['width'] ) ) {
-			$package->width = trim( $attributes['width'] );
+			if (preg_match( "/((\d+)(\w{0,5}))$/", $attributes['width'])) {
+				$package->width = trim( $attributes['width'] );
+			}
 		}
 		if ( isset( $attributes['height'] ) ) {
-			$package->height = trim( $attributes['height'] );
+			if (preg_match( "/((\d+)(\w{0,5}))$/", $attributes['height'])) {
+				$package->height = trim( $attributes['height'] );
+			}
 		}
 		if ( isset( $attributes['start_node'] ) ) {
-			$package->start_node = trim( $attributes['start_node'] );
+			if (preg_match("/((\w{1,10}))$/", $attributes['start_node'])) {
+				$package->start_node = trim( $attributes['start_node'] );
+			}
 		}
 		if ( isset( $attributes['start_view'] ) ) {
-			$package->start_view = trim( $attributes['start_view'] );
+			if (preg_match( "/(([\w\,\|\/]{0,30}))$/", $attributes['start_view'])) {
+				$package->start_view = trim( $attributes['start_view'] );
+			}
 		}
 
 		return $package->get_html_code( $post->ID );

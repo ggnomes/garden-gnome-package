@@ -1,8 +1,8 @@
 # Garden Gnome Package
 Contributors: Ggnomes
-Tags: panorama, pano, virtual tour, webvr, pano2vr, object2vr
+Tags: panorama, pano, virtual tour, webvr, webxr, pano2vr, object2vr, 360
 Requires at least: 5.0
-Tested up to: 5.9.0
+Tested up to: 6.4.0
 Stable tag: trunk
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -94,6 +94,9 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 4. Shortcode in classic editor
 
 ## Changelog
+
+### 2.2.6
+* Better input sanitization for the short code attributes
 
 ### 2.2.5
 * Fix for Elementor icon and version bump
