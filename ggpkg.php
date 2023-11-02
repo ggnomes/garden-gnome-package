@@ -20,7 +20,7 @@
  * Plugin Name: Garden Gnome Package
  * Plugin URI:  https://ggnome.com/ggpkg
  * Description: Import Pano2VR & Object2VR Content into Wordpress.
- * Version:     2.2.7
+ * Version:     2.2.8
  * Author:      <a href="https://ggnome.com">Garden Gnome Software</a>
  ************************************************************************/
 
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 include_once( 'include/ggpackage.php' );
 
 function ggpkg_uninstall() {
-	delete_option( ggsw_import_settings );
+	delete_option( 'ggsw_import_settings' );
 }
 
 
@@ -216,7 +216,7 @@ class GGPackageViewer {
 			$this,
 			'import_options_page'
 		) );
-		add_action( 'load-' . $this->options_page, array( $this, 'add_help' ));
+		add_action( 'load-' . $this->options_page, array( $this, 'add_help' ) );
 	}
 
 	public function import_options_page() {
@@ -231,7 +231,7 @@ class GGPackageViewer {
 			$this->options = array(
 				'width'                    => sanitize_text_field( $_POST['ggsw_player_size_w'] ),
 				'height'                   => sanitize_text_field( $_POST['ggsw_player_size_h'] ),
-				'start_preview'            => sanitize_text_field( $_POST['ggsw_player_start_preview'] ),
+				'start_preview'            => isset( $_POST['ggsw_player_start_preview'] ) ? sanitize_text_field( $_POST['ggsw_player_start_preview'] ) : "",
 				'pano2vr_player_version'   => sanitize_text_field( $_POST['ggsw_pano2vr_player_version'] ),
 				'object2vr_player_version' => sanitize_text_field( $_POST['ggsw_object2vr_player_version'] )
 			);
@@ -256,10 +256,12 @@ class GGPackageViewer {
                         <td>
                             <label for="ggsw_player_size_w"><?php _e( 'Width' ); ?></label>
                             <input name="ggsw_player_size_w" type="text" id="ggsw_player_size_w"
-                                   value="<?php echo esc_html( $this->options['width'] ); ?>" class="small-text"/>
+                                   value="<?php echo esc_attr( $this->options['width'] ); ?>"
+                                   class="medium-text"/>
                             <label for="ggsw_player_size_h"><?php _e( 'Height' ); ?></label>
                             <input name="ggsw_player_size_h" type="text" id="ggsw_player_size_h"
-                                   value="<?php echo esc_html( $this->options['height'] ); ?>" class="small-text"/><br/>
+                                   value="<?php echo esc_attr( $this->options['height'] ); ?>"
+                                   class="medium-text"/><br/>
                         </td>
                     </tr>
                     <tr>
@@ -360,12 +362,12 @@ class GGPackageViewer {
 
 	public function import_validate_options( $input ) {
 		$valid = array();
-		if ( preg_match( "/((\d+)(\w{0,5}))$/", $input['width'] ) ) {
+		if ( isset( $input['width'] ) && ( $input['width'] ) ) {
 			$valid['width'] = strval( $input['width'] );
 		} else {
 			$valid['width'] = '640';
 		}
-		if ( preg_match( "/((\d+)(\w{0,5}))$/", $input['height'] ) ) {
+		if ( isset( $input['height'] ) && ( $input['height'] ) ) {
 			$valid['height'] = strval( $input['height'] );
 		} else {
 			$valid['height'] = '480';
@@ -377,16 +379,14 @@ class GGPackageViewer {
 		return $valid;
 	}
 
-	function add_help()
-	{
+	function add_help() {
 		$screen = get_current_screen();
 		$screen->add_help_tab( array(
-			'id'       => 'ggpkg-default',
-			'title'    => __( 'Default' ),
-			'content'  => '<br/><a href="https://ggnome.com/ggpkg" target="_blank">' . __( "Garden Gnome Package Documentation", 'ggpkg' ) . '</a>'
-		));
+			'id'      => 'ggpkg-default',
+			'title'   => __( 'Default' ),
+			'content' => '<br/><a href="https://ggnome.com/ggpkg" target="_blank">' . __( "Garden Gnome Package Documentation", 'ggpkg' ) . '</a>'
+		) );
 	}
-
 
 	public function settings_link( $links ) {
 		array_unshift( $links, '<a href="options-general.php?page=ggpkg">' . __( 'Settings', 'ggpkg' ) . '</a>' );
@@ -657,7 +657,7 @@ class GGPackageViewer {
 
 	public function shortcode( $attributes ) {
 		global $post;
-		$attachmentID = isset($attributes['id'])?$attributes['id']:false;
+		$attachmentID = isset( $attributes['id'] ) ? $attributes['id'] : false;
 		$package      = new GGPackage( $this );
 
 		if ( isset( $attributes['url'] ) ) {
@@ -683,12 +683,12 @@ class GGPackageViewer {
 			$package->height = trim( $attributes['height'] );
 		}
 		if ( isset( $attributes['start_node'] ) ) {
-			if (preg_match("/((\w{1,10}))$/", $attributes['start_node'])) {
+			if ( preg_match( "/((\w{1,10}))$/", $attributes['start_node'] ) ) {
 				$package->start_node = trim( $attributes['start_node'] );
 			}
 		}
 		if ( isset( $attributes['start_view'] ) ) {
-			if (preg_match( "/(([\w\,\|\/]{0,30}))$/", $attributes['start_view'])) {
+			if ( preg_match( "/(([\w\,\|\/]{0,30}))$/", $attributes['start_view'] ) ) {
 				$package->start_view = trim( $attributes['start_view'] );
 			}
 		}

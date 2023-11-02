@@ -95,6 +95,9 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 
 ## Changelog
 
+### 2.2.8
+* Fixes for the plugin settings dialog
+
 ### 2.2.7
 * Less strict sanitization to allow complex CSS attributes in short code
 
