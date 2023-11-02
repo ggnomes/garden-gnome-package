@@ -33,14 +33,10 @@ class GGPackage {
 		if ( isset( $viewer ) && isset( $viewer->options ) ) {
 			$options = $viewer->options;
 			if ( isset( $options['width'] ) ) {
-				if (preg_match( "/((\d+)(\w{0,5}))$/", $options['width'])) {
-					$this->width = $options['width'];
-				}
+				$this->width = $options['width'];
 			}
 			if ( isset( $options['height'] ) ) {
-				if (preg_match( "/((\d+)(\w{0,5}))$/", $options['height'])) {
-					$this->height = $options['height'];
-				}
+				$this->height = $options['height'];
 			}
 			$this->use_preview           = $options['start_preview'] === 'on';
 			$this->pano_player_version   = $options['pano2vr_player_version'];
@@ -285,7 +281,7 @@ class GGPackage {
 		if ( is_numeric( $height ) ) {
 			$height = $height . "px";
 		}
-		$html = "<div id='ggpkg_container" . $ID . "' style='width:" . $width . "; height:" . $height . "; position: relative;'>\n";
+		$html = "<div id='ggpkg_container" . $ID . "' style='width:" . esc_attr($width) . "; height:" . esc_attr($height) . "; position: relative;'>\n";
 		if ( $this->use_preview ) {
 			$html .= "<div style='width:100%; height:100%; overflow: hidden; position:relative; display:flex; justify-content:center; align-items:center;'>\n";
 			if ( $this->preview_file ) {

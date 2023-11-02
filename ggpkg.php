@@ -20,7 +20,7 @@
  * Plugin Name: Garden Gnome Package
  * Plugin URI:  https://ggnome.com/ggpkg
  * Description: Import Pano2VR & Object2VR Content into Wordpress.
- * Version:     2.2.6
+ * Version:     2.2.7
  * Author:      <a href="https://ggnome.com">Garden Gnome Software</a>
  ************************************************************************/
 
@@ -156,10 +156,10 @@ class GGPackageViewer {
 
 		if ( isset( $attachmentID ) && ( $this->attachment_is_package( $attachmentID ) ) ) {
 			$package = new GGPackage( $this, $attachmentID );
-			if ( isset( $block_attributes['width'] ) && ( preg_match( "/((\d+)(\w{0,5}))$/", $block_attributes['width'] ) ) ) {
+			if ( isset( $block_attributes['width'] ) ) {
 				$package->width = $block_attributes['width'];
 			}
-			if ( isset( $block_attributes['height'] ) && ( preg_match( "/((\d+)(\w{0,5}))$/", $block_attributes['height'] ) ) ) {
+			if ( isset( $block_attributes['height'] ) ) {
 				$package->height = $block_attributes['height'];
 			}
 			if ( isset( $block_attributes['startPreview'] ) ) {
@@ -677,14 +677,10 @@ class GGPackageViewer {
 			$package->use_preview = $this->attribute_set_true( $attributes['start_preview'] );
 		}
 		if ( isset( $attributes['width'] ) ) {
-			if (preg_match( "/((\d+)(\w{0,5}))$/", $attributes['width'])) {
-				$package->width = trim( $attributes['width'] );
-			}
+			$package->width = trim( $attributes['width'] );
 		}
 		if ( isset( $attributes['height'] ) ) {
-			if (preg_match( "/((\d+)(\w{0,5}))$/", $attributes['height'])) {
-				$package->height = trim( $attributes['height'] );
-			}
+			$package->height = trim( $attributes['height'] );
 		}
 		if ( isset( $attributes['start_node'] ) ) {
 			if (preg_match("/((\w{1,10}))$/", $attributes['start_node'])) {

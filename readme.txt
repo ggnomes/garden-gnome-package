@@ -95,6 +95,9 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 
 ## Changelog
 
+### 2.2.7
+* Less strict sanitization to allow complex CSS attributes in short code
+
 ### 2.2.6
 * Better input sanitization for the short code attributes
 
