@@ -683,7 +683,7 @@ class GGPackageViewer {
 			$package->height = trim( $attributes['height'] );
 		}
 		if ( isset( $attributes['start_node'] ) ) {
-			if ( preg_match( "/((\w{1,10}))$/", $attributes['start_node'] ) ) {
+			if ( preg_match( "/^(\w{1,25})$/", $attributes['start_node'] ) ) {
 				$package->start_node = trim( $attributes['start_node'] );
 			}
 		}

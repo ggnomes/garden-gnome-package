@@ -249,7 +249,7 @@ class GGPackage {
 							wp_enqueue_script( 'js_' . $this->attachment_id . '_' . $index, $js_file );
 						} else {
 							if ( ( substr( $js_file, 0, 6 ) == 'webvr/' ) ||
-								( substr( $js_file, 0, 6 ) == 'webxr/' ) ) { // only load the webvr scripts from one source
+							     ( substr( $js_file, 0, 6 ) == 'webxr/' ) ) { // only load the webvr scripts from one source
 								wp_enqueue_script( 'js_g_' . $js_file, $this->to_url( $js_file ) );
 							} else {
 								wp_enqueue_script( 'js_' . $this->attachment_id . '_' . $index, $this->to_url( $js_file ) );
@@ -281,7 +281,7 @@ class GGPackage {
 		if ( is_numeric( $height ) ) {
 			$height = $height . "px";
 		}
-		$html = "<div id='ggpkg_container" . $ID . "' style='width:" . esc_attr($width) . "; height:" . esc_attr($height) . "; position: relative;'>\n";
+		$html = "<div id='ggpkg_container" . $ID . "' style='width:" . esc_attr( $width ) . "; height:" . esc_attr( $height ) . "; position: relative;'>\n";
 		if ( $this->use_preview ) {
 			$html .= "<div style='width:100%; height:100%; overflow: hidden; position:relative; display:flex; justify-content:center; align-items:center;'>\n";
 			if ( $this->preview_file ) {
@@ -300,11 +300,11 @@ class GGPackage {
 		}
 		$html .= "</div>\n";
 		if ( ( $this->remote_url == "" ) && ( $this->is_pano ) && ( $this->pano_player_version != "package" ) // Remote packages should load the remote player to avoid CORS trouble.
-			&& ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "pano2vr_player/" . $this->pano_player_version . "/pano2vr_player.js" ) ) ) {
+		     && ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "pano2vr_player/" . $this->pano_player_version . "/pano2vr_player.js" ) ) ) {
 			wp_enqueue_script( 'js_ggsw_pano2vr_player', plugin_dir_url( dirname( __FILE__ ) ) . "pano2vr_player/" . $this->pano_player_version . "/pano2vr_player.js" );
 
 		} elseif ( ( $this->remote_url == "" ) && ( $this->is_object ) && ( $this->object_player_version != "package" )
-			&& ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "object2vr_player/" . $this->object_player_version . "/object2vr_player.js" ) ) ) {
+		           && ( file_exists( plugin_dir_path( dirname( __FILE__ ) ) . "object2vr_player/" . $this->object_player_version . "/object2vr_player.js" ) ) ) {
 			wp_enqueue_script( 'js_ggsw_object2vr_player', plugin_dir_url( dirname( __FILE__ ) ) . "object2vr_player/" . $this->object_player_version . "/object2vr_player.js" );
 		} else {
 			$html .= "<script type='text/javascript' src='" . $this->to_url( $this->player_file ) . "'></script>\n";
@@ -335,7 +335,7 @@ class GGPackage {
 			$play_js = $jsObj . "=new " . $jsClassPrefix . "Player('ggpkg_container" . $ID . "');\n";
 		}
 		if ( $this->start_node != "" ) {
-			$play_js .= $jsObj . ".startNode = '" . $this->start_node . "';\n";
+			$play_js .= $jsObj . ".startNode = '" . esc_attr( $this->start_node ) . "';\n";
 		}
 		if ( $this->start_view != "" ) {
 			$view_params = explode( "/", $this->start_view, 4 );
