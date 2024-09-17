@@ -20,7 +20,7 @@
  * Plugin Name: Garden Gnome Package
  * Plugin URI:  https://ggnome.com/ggpkg
  * Description: Import Pano2VR & Object2VR Content into Wordpress.
- * Version:     2.2.9
+ * Version:     2.3.0
  * Author:      <a href="https://ggnome.com">Garden Gnome Software</a>
  ************************************************************************/
 
@@ -38,7 +38,6 @@ include_once( 'include/ggpackage.php' );
 function ggpkg_uninstall() {
 	delete_option( 'ggsw_import_settings' );
 }
-
 
 class GGPackageViewer {
 	public $options;
@@ -96,6 +95,7 @@ class GGPackageViewer {
 		$this->options['start_preview']            = false;
 		$this->options['pano2vr_player_version']   = "package";
 		$this->options['object2vr_player_version'] = "package";
+		$this->options['allow_url_shortcode']      = false;
 	}
 
 	function attribute_set_false( $attribute ) {
@@ -232,8 +232,9 @@ class GGPackageViewer {
 				'width'                    => sanitize_text_field( $_POST['ggsw_player_size_w'] ),
 				'height'                   => sanitize_text_field( $_POST['ggsw_player_size_h'] ),
 				'start_preview'            => isset( $_POST['ggsw_player_start_preview'] ) ? sanitize_text_field( $_POST['ggsw_player_start_preview'] ) : "",
+				'allow_url_shortcode'      => isset( $_POST['ggsw_player_allow_url_shortcode'] ) ? sanitize_text_field( $_POST['ggsw_player_allow_url_shortcode'] ) : "",
 				'pano2vr_player_version'   => sanitize_text_field( $_POST['ggsw_pano2vr_player_version'] ),
-				'object2vr_player_version' => sanitize_text_field( $_POST['ggsw_object2vr_player_version'] )
+				'object2vr_player_version' => sanitize_text_field( $_POST['ggsw_object2vr_player_version'] ),
 			);
 
 			$success = $this->options == get_option( 'ggsw_import_settings' );
@@ -266,11 +267,20 @@ class GGPackageViewer {
                     </tr>
                     <tr>
                         <td>
-                            <label for="ggsw_player_start_preview"><?php _e( 'Start player as preview image', 'ggpkg' ); ?></label>
+                            <label for="ggsw_player_start_preview"><?php _e( 'Preview Image', 'ggpkg' ); ?></label>
                         </td>
                         <td>
                             <input name="ggsw_player_start_preview" type="checkbox"
-							       <?php if ( $this->options['start_preview'] ) : ?>checked<?php endif; ?> />
+							       <?php if ( $this->options['start_preview'] ) : ?>checked<?php endif; ?> /><?php _e( 'Show the preview image on start.', 'ggpkg' ); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="ggsw_player_allow_url_shortcode"><?php _e( 'Shortcode', 'ggpkg' ); ?></label>
+                        </td>
+                        <td>
+                            <input name="ggsw_player_allow_url_shortcode" type="checkbox"
+							       <?php if ( $this->options['allow_url_shortcode'] ?? false ) : ?>checked<?php endif; ?> /><?php _e( 'Enable the <code>url</code> field in the <code>ggpkg</code> shortcode. This may pose a security risk if you use untrusted external URLs.', 'ggpkg' ); ?>
                         </td>
                     </tr>
                     <tr>
@@ -373,6 +383,7 @@ class GGPackageViewer {
 			$valid['height'] = '480';
 		}
 		$valid['start_preview']            = $input['start_preview'] === "on" ? "on" : "";
+		$valid['allow_url_shortcode']      = $input['allow_url_shortcode'] === "on" ? "on" : "";
 		$valid['pano2vr_player_version']   = strval( $input['pano2vr_player_version'] );
 		$valid['object2vr_player_version'] = strval( $input['object2vr_player_version'] );
 
@@ -428,8 +439,7 @@ class GGPackageViewer {
 		return $post_mime_types;
 	}
 
-
-	// Exception for WordPress 4.7.1 file contents check system using finfo_file (wp-include/functions.php)
+// Exception for WordPress 4.7.1 file contents check system using finfo_file (wp-include/functions.php)
 
 	public function unzip_package( $attachmentID = "" ) {
 		if ( $this->attachment_is_package( $attachmentID ) ) {
@@ -661,15 +671,20 @@ class GGPackageViewer {
 		$package      = new GGPackage( $this );
 
 		if ( isset( $attributes['url'] ) ) {
-			$url = $attributes['url'];
-			$url = str_replace( '/index.html', '/', $url );
-			if ( substr( $url, - 1 ) != '/' ) {
-				$url = $url . '/';
+			if ( $this->options['allow_url_shortcode'] ?? false ) {
+				$url = $attributes['url'];
+				if ( filter_var( $url, FILTER_VALIDATE_URL ) && ( ! parse_url( $url, PHP_URL_QUERY ) ) ) {
+					$url = str_replace( '/index.html', '/', $url );
+					if ( substr( $url, - 1 ) != '/' ) {
+						$url = $url . '/';
+					}
+					$package->set_from_url( esc_url( $url ) );
+				} else {
+					return "<b>Invalid URL</b>";
+				}
+			} else {
+				return "<b>Garden Gnome Package Shortcode: The url field is disabled in the settings</b>";
 			}
-			if ( parse_url( $url, PHP_URL_SCHEME ) == '' ) {
-				$url = home_url( $url );
-			}
-			$package->set_from_url( $url );
 		} elseif ( $attachmentID ) {
 			$package->from_attachment( $attachmentID );
 		}

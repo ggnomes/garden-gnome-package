@@ -2,9 +2,9 @@
 Contributors: Ggnomes
 Tags: panorama, pano, virtual tour, webvr, webxr, pano2vr, object2vr, 360
 Requires at least: 5.0
-Tested up to: 6.4.0
+Tested up to: 6.6.2
 Stable tag: trunk
-Requires PHP: 5.6
+Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,7 +32,7 @@ When you are using a shortcode to embed a package, you can provide additional pa
 
 - start_view: for panoramas and virtual tours, sets the initial view of the first node. The format is 'pan/tilt/fov/projection'. The projection parameter is optional.
 
-- url: can be used instead of ID, to embed a package from a specific URL. Like `[ggpkg url='....']`
+- url: can be used instead of ID, to embed a package from a specific URL. Like `[ggpkg url='....']`. This field needs to be enabled in the settings.
 
 Example: `[ggpkg id=12 width='100%' height='500px' start_preview='true']`
 
@@ -70,11 +70,11 @@ A Garden Gnome Package is a simple ZIP file that contains everything necessary t
 
 ### How can I create a package? 
 
-Please see the [Pano2VR documentation](https://ggnome.com/doc/pano2vr/6/cms-plugins/).
+Please see the [Pano2VR documentation](https://ggnome.com/doc/pano2vr/guide/export/output-web/ggpkg/) or [Object2VR documentation](https://ggnome.com/doc/object2vr/guide/export/output-web/ggpkg/).
 
 ### How can I upload a tour with a large file size? 
 
-The easiest solution is to install the excellent [Tuxedo Big File Uploads](https://wordpress.org/plugins/tuxedo-big-file-uploads/) plugin.
+The easiest solution is to install the excellent [Big File Uploads](https://wordpress.org/plugins/tuxedo-big-file-uploads/) plugin.
 
 There are two strategies without an additional plugin:
 
@@ -94,6 +94,9 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 4. Shortcode in classic editor
 
 ## Changelog
+
+### 2.3.0
+* Added and option for the url field in the settings, that is off by default for security reasons.
 
 ### 2.2.9
 * Fixes for “start_node” parameter sanitization
