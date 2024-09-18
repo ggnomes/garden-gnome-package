@@ -675,6 +675,7 @@ class GGPackageViewer {
 				$url = $attributes['url'];
 				if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
                     $url = strtok($url  ,   "?"); // remove query string
+					$url = strtok($url  ,   "#"); // remove fragment string
 					$url = str_replace( '/index.html', '/', $url );
 					if ( substr( $url, - 1 ) != '/' ) {
 						$url = $url . '/';
