@@ -673,7 +673,8 @@ class GGPackageViewer {
 		if ( isset( $attributes['url'] ) ) {
 			if ( $this->options['allow_url_shortcode'] ?? false ) {
 				$url = $attributes['url'];
-				if ( filter_var( $url, FILTER_VALIDATE_URL ) && ( ! parse_url( $url, PHP_URL_QUERY ) ) ) {
+				if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
+                    $url = strtok($url  ,   "?"); // remove query string
 					$url = str_replace( '/index.html', '/', $url );
 					if ( substr( $url, - 1 ) != '/' ) {
 						$url = $url . '/';
