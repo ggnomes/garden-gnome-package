@@ -96,7 +96,8 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 ## Changelog
 
 ### 2.3.0
-* Added and option for the url field in the settings, that is off by default for security reasons.
+* *Breaking Change:* Added and option for the url field in the settings, that is off by default for security reasons.
+* Shortcode: Better “url” parameter sanitization
 
 ### 2.2.9
 * Fixes for “start_node” parameter sanitization
