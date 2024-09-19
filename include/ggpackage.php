@@ -216,6 +216,9 @@ class GGPackage {
 		if ( isset( $json->player ) && isset( $json->player->js ) ) {
 			$this->player_file = $json->player->js;
 		}
+		if ( isset( $json->configuration ) ) {
+			$this->xml_file = $json->pconfiguration;
+		}
 		if ( isset( $json->skin ) && isset( $json->skin->js ) ) {
 			$this->skin_file = $json->skin->js;
 		}
