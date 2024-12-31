@@ -1,10 +1,10 @@
 # Garden Gnome Package
 Contributors: Ggnomes
-Tags: panorama, pano, virtual tour, webvr, webxr, pano2vr, object2vr, 360
+Tags: panorama, virtual tour, webvr, webxr, 360
 Requires at least: 5.0
-Tested up to: 6.6.2
+Tested up to: 6.7.1
 Stable tag: trunk
-Requires PHP: 7.0
+Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,9 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 4. Shortcode in classic editor
 
 ## Changelog
+
+### 2.4.0
+* Added a list of valid file extensions within a package file for security reasons (CVE-2024-12854).
 
 ### 2.3.0
 * *Breaking Change:* Added and option for the url field in the settings, that is off by default for security reasons.

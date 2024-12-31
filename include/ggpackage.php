@@ -27,6 +27,7 @@ class GGPackage {
 	private $json;
 	private static $code_uid = 0;
 	private $viewer;
+	private $filename = "";
 
 	public function __construct( $viewer = null, $attachmentID = null ) {
 		$this->viewer = $viewer;
@@ -51,9 +52,9 @@ class GGPackage {
 		$this->attachment_id   = $id;
 		$attachment_url        = wp_get_attachment_url( $this->attachment_id );
 		$this->attachment_file = get_attached_file( $id );
-		$filename              = strrchr( $attachment_url, '/' );
-		$filename              = str_replace( '-', '_', $filename );
-		$attachment_url        = substr( $attachment_url, 0, strrpos( $attachment_url, '/' ) ) . $filename;
+		$this->filename        = strrchr( $attachment_url, '/' );
+		$this->filename        = str_replace( '-', '_', $this->filename );
+		$attachment_url        = substr( $attachment_url, 0, strrpos( $attachment_url, '/' ) ) . $this->filename;
 		$this->local_url       = substr( $attachment_url, 0, strrpos( $attachment_url, '.' ) );
 		// remove domain?
 		// $this->local_url       = $this->url_from_local($this->local_url);
@@ -161,7 +162,7 @@ class GGPackage {
 		return $path_parts['dirname'] . "/" . $this->folder();
 	}
 
-	public function file_url( $file ) {
+	public function file_url( $file ): string {
 		$attachmentURL = $this->attachment_url;
 		$attachmentURL = substr( $attachmentURL, 0, strrpos( $attachmentURL, '/' ) ) . $this->filename;
 		$extract_path  = substr( $attachmentURL, 0, strrpos( $attachmentURL, '.' ) );
@@ -177,7 +178,7 @@ class GGPackage {
 		}
 	}
 
-	public function get_preview_image_size() {
+	public function get_preview_image_size(): array {
 		$attachmentID = $this->attachment_id;
 		$w            = get_post_meta( $attachmentID, "ggsw_width", true );
 		$h            = get_post_meta( $attachmentID, "ggsw_height", true );
@@ -237,7 +238,7 @@ class GGPackage {
 
 	}
 
-	public function get_html_code( $postID ) {
+	public function get_html_code( $postID ): string {
 		$ID = "_" . GGPackage::$code_uid . "_" . $postID;
 		GGPackage::$code_uid ++;
 

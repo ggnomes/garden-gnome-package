@@ -20,7 +20,7 @@
  * Plugin Name: Garden Gnome Package
  * Plugin URI:  https://ggnome.com/ggpkg
  * Description: Import Pano2VR & Object2VR Content into Wordpress.
- * Version:     2.3.0
+ * Version:     2.4.0
  * Author:      <a href="https://ggnome.com">Garden Gnome Software</a>
  ************************************************************************/
 
@@ -43,6 +43,10 @@ class GGPackageViewer {
 	public $options;
 	private $options_page;
 
+	public $valid_default_extensions = "css,html,htm,txt,pdf,xml,json,js," . // html player and web extensions
+	                                   "jpg,jpeg,gif,png,apng,weba,webm,webp,svg,avif,ico,cur,avi,mp3,aac,mp4,mov,swf," . // image, video and audio formats
+	                                   "ttf,woff,woff2,otf,bcmap,properties";  // web fonts and pdf viewer files
+
 	public function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
 		add_shortcode( 'ggpkg', array( $this, 'shortcode' ) );
@@ -62,7 +66,11 @@ class GGPackageViewer {
 
 		$this->options_page = null;
 		$this->options      = get_option( 'ggsw_import_settings' );
-		if ( ! $this->options ) {
+		if ( $this->options ) {
+			if ( ! isset( $this->options["file_extensions"] ) ) {
+				$this->options["file_extensions"] = "";
+			}
+		} else {
 			$this->options = array();
 			$this->import_settings_default();
 		}
@@ -95,6 +103,7 @@ class GGPackageViewer {
 		$this->options['start_preview']            = false;
 		$this->options['pano2vr_player_version']   = "package";
 		$this->options['object2vr_player_version'] = "package";
+		$this->options['file_extensions']          = "";
 		$this->options['allow_url_shortcode']      = false;
 	}
 
@@ -235,6 +244,7 @@ class GGPackageViewer {
 				'allow_url_shortcode'      => isset( $_POST['ggsw_player_allow_url_shortcode'] ) ? sanitize_text_field( $_POST['ggsw_player_allow_url_shortcode'] ) : "",
 				'pano2vr_player_version'   => sanitize_text_field( $_POST['ggsw_pano2vr_player_version'] ),
 				'object2vr_player_version' => sanitize_text_field( $_POST['ggsw_object2vr_player_version'] ),
+				'file_extensions'          => sanitize_text_field( $_POST['ggsw_file_extensions'] ),
 			);
 
 			$success = $this->options == get_option( 'ggsw_import_settings' );
@@ -247,13 +257,12 @@ class GGPackageViewer {
 		} ?>
         <div class="wrap">
 			<?php settings_errors( 'ggsw_import_general' ); ?>
-			<?php screen_icon(); ?>
             <h2><?php _e( 'Garden Gnome Package' ); ?></h2>
             <form action="" method="post">
                 <input name="nonce" type="hidden" id="nonce" value="<?php echo wp_create_nonce( 'ggsw_options' ); ?>">
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><?php _e( 'Default Player Size', 'ggpkg' ) ?></th>
+                        <td scope="row"><?php _e( 'Default Player Size', 'ggpkg' ) ?></td>
                         <td>
                             <label for="ggsw_player_size_w"><?php _e( 'Width' ); ?></label>
                             <input name="ggsw_player_size_w" type="text" id="ggsw_player_size_w"
@@ -281,6 +290,19 @@ class GGPackageViewer {
                         <td>
                             <input name="ggsw_player_allow_url_shortcode" type="checkbox"
 							       <?php if ( $this->options['allow_url_shortcode'] ?? false ) : ?>checked<?php endif; ?> /><?php _e( 'Enable the <code>url</code> field in the <code>ggpkg</code> shortcode. This may pose a security risk if you use untrusted external URLs.', 'ggpkg' ); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" scope="row"><?php _e( 'Valid File Extensions', 'ggpkg' ) ?></td>
+                        <td>
+                            <label for="ggsw_file_extensions"><?php _e( 'Default:' ); ?></label>
+                            <input id="ggsw_file_extensions" type="text" maxlength="100" disabled
+                                   value="<?php echo $this->valid_default_extensions; ?>"
+                                   class="large-text"/><br/>
+                            <label for="ggsw_file_extensions"><?php _e( 'Additional:' ); ?></label>
+                            <input name="ggsw_file_extensions" type="text" id="ggsw_file_extensions"
+                                   value="<?php echo esc_attr( $this->options['file_extensions'] ); ?>"
+                                   class="large-text"/><br/>
                         </td>
                     </tr>
                     <tr>
@@ -334,7 +356,6 @@ class GGPackageViewer {
                             </select>
                         </td>
                     </tr>
-
 					<?php
 					do_settings_sections( 'ggpkg' ); ?>
                 </table>
@@ -386,6 +407,7 @@ class GGPackageViewer {
 		$valid['allow_url_shortcode']      = $input['allow_url_shortcode'] === "on" ? "on" : "";
 		$valid['pano2vr_player_version']   = strval( $input['pano2vr_player_version'] );
 		$valid['object2vr_player_version'] = strval( $input['object2vr_player_version'] );
+		$valid['file_extensions']          = strval( $input['file_extensions'] );
 
 		return $valid;
 	}
@@ -442,6 +464,14 @@ class GGPackageViewer {
 // Exception for WordPress 4.7.1 file contents check system using finfo_file (wp-include/functions.php)
 
 	public function unzip_package( $attachmentID = "" ) {
+
+		$valid_extensions = explode( ",", $this->valid_default_extensions );
+		if ( isset( $this->options['file_extensions'] ) ) {
+			$more_extensions = explode( ",", $this->options['file_extensions'] );
+			if ( $more_extensions ) {
+				$valid_extensions = array_merge( $valid_extensions, $more_extensions );
+			}
+		}
 		if ( $this->attachment_is_package( $attachmentID ) ) {
 			$attachment = get_attached_file( $attachmentID );
 			if ( $attachment ) {
@@ -456,9 +486,24 @@ class GGPackageViewer {
 					$this->error_log( "mkdir failed!" );
 				}
 				$zip_file = new ZipArchive();
-				if ( $zip_file->open( $attachment ) == true ) {
-					if ( $zip_file->extractTo( $extract_path ) == false ) {
-						$this->error_log( "Error extracting " . $zip_file );
+				if ( $zip_file->open( $attachment ) ) {
+					$validFiles = [];
+					for ( $i = 0; $i < $zip_file->count(); $i ++ ) {
+						$fn  = $zip_file->getNameIndex( $i );
+						$ext = pathinfo( $fn, PATHINFO_EXTENSION );
+						if ( ( $ext === "" ) || in_array( $ext, $valid_extensions ) ) {
+							$validFiles[] = $fn;
+						} else {
+							$msg = "Invalid file extention '" . $ext . "' in file " . $fn;
+							$this->error_log( $msg );
+							show_message( $msg );
+						}
+					}
+
+					if ( ! $zip_file->extractTo( $extract_path, $validFiles ) ) {
+						$this->error_log( $zip_file->getStatusString() );
+						$this->error_log( $validFiles );
+						$this->error_log( "Error extracting " . $filename );
 					} else {
 						$player_version = '';
 						if ( file_exists( $extract_path . "/gginfo.json" ) ) {
@@ -532,7 +577,7 @@ class GGPackageViewer {
 		$timestamp        = date( 'd/m/Y H:i:s' );
 		$ggsw_plugin_path = plugin_dir_path( __FILE__ );
 		$ggsw_log_file    = $ggsw_plugin_path . 'error.log';
-
+		$message          = print_r( $message, true );
 		if ( ! file_exists( $ggsw_log_file ) ) {
 			$file_handle = fopen( $ggsw_log_file, 'w' );
 			fwrite( $file_handle, "[" . $timestamp . "] : Logfile created.\r\n" );
@@ -674,8 +719,8 @@ class GGPackageViewer {
 			if ( $this->options['allow_url_shortcode'] ?? false ) {
 				$url = $attributes['url'];
 				if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
-                    $url = strtok($url  ,   "?"); // remove query string
-					$url = strtok($url  ,   "#"); // remove fragment string
+					$url = strtok( $url, "?" ); // remove query string
+					$url = strtok( $url, "#" ); // remove fragment string
 					$url = str_replace( '/index.html', '/', $url );
 					if ( substr( $url, - 1 ) != '/' ) {
 						$url = $url . '/';
