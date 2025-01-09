@@ -1,12 +1,13 @@
 .ggskin img {
-    margin: none !important; 
-    border: none !important; 
-    padding: none !important; 
+    margin: 0 !important;
+    border: none !important;
+    padding: 0 !important;
     box-shadow: none !important;
     background: none !important;
 }
+
 .ggskin {
-    font-family: Helvetica, Arial, Sans-Serif; 
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: normal;
     box-sizing: content-box !important;
