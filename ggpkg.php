@@ -20,7 +20,7 @@
  * Plugin Name: Garden Gnome Package
  * Plugin URI:  https://ggnome.com/ggpkg
  * Description: Import Pano2VR & Object2VR Content into Wordpress.
- * Version:     2.4.0
+ * Version:     2.4.1
  * Author:      <a href="https://ggnome.com">Garden Gnome Software</a>
  ************************************************************************/
 
@@ -45,7 +45,8 @@ class GGPackageViewer {
 
 	public $valid_default_extensions = "css,html,htm,txt,pdf,xml,json,js," . // html player and web extensions
 	                                   "jpg,jpeg,gif,png,apng,weba,webm,webp,svg,avif,ico,cur,avi,mp3,aac,mp4,mov,swf," . // image, video and audio formats
-	                                   "ttf,woff,woff2,otf,bcmap,properties";  // web fonts and pdf viewer files
+	                                   "ttf,woff,woff2,otf,bcmap,properties," .  // web fonts and pdf viewer files
+	                                   "wasm,glb,splat,ksplat,ply,spz,sog"; // 3D object and splat formats
 
 	public function __construct() {
 		add_action( 'init', array( $this, 'init' ) );

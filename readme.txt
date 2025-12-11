@@ -2,7 +2,7 @@
 Contributors: Ggnomes
 Tags: panorama, virtual tour, webvr, webxr, 360
 Requires at least: 5.0
-Tested up to: 6.7.1
+Tested up to: 6.9.0
 Stable tag: trunk
 Requires PHP: 7.2
 License: GPLv2 or later
@@ -54,7 +54,7 @@ In the Widget settings, you can pick a package from the media library, define th
 
 ## Installation
 
-###Requirements: 
+###Requirements:
 
 The [zip](https://www.php.net/manual/en/book.zip.php) and [libxml](https://www.php.net/manual/en/book.libxml.php) PHP module must be installed on your server.
 
@@ -68,11 +68,11 @@ The [zip](https://www.php.net/manual/en/book.zip.php) and [libxml](https://www.p
 
 A Garden Gnome Package is a simple ZIP file that contains everything necessary to display a single panorama, virtual tour, or object movie. After uploading the package, the plugin extracts the archive.
 
-### How can I create a package? 
+### How can I create a package?
 
 Please see the [Pano2VR documentation](https://ggnome.com/doc/pano2vr/guide/export/output-web/ggpkg/) or [Object2VR documentation](https://ggnome.com/doc/object2vr/guide/export/output-web/ggpkg/).
 
-### How can I upload a tour with a large file size? 
+### How can I upload a tour with a large file size?
 
 The easiest solution is to install the excellent [Big File Uploads](https://wordpress.org/plugins/tuxedo-big-file-uploads/) plugin.
 
@@ -82,7 +82,7 @@ There are two strategies without an additional plugin:
 
 - Upload a small version of the tour (i.e., just the start node) and then replace the files in the extracted folder in the upload directory.
 
-### How can contribute? 
+### How can contribute?
 
 Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome-package).
 
@@ -94,6 +94,9 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 4. Shortcode in classic editor
 
 ## Changelog
+
+### 2.4.1
+* Added 3d file extensions to the allowed file types for Pano2VR 8 packages.
 
 ### 2.4.0
 * Added a list of valid file extensions within a package file for security reasons (CVE-2024-12854).
@@ -154,7 +157,7 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 * Changed div container ids
 
 ### 2.0.1
-* Improved CSS reset for images 
+* Improved CSS reset for images
 
 ### 2.0
 * Complete rewrite of the ggpkg-import plugin.
