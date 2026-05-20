@@ -10,7 +10,15 @@ This plugin provides an easy way to publish panoramas and object movies created 
 
 You can embed a package via a shortcode like `[ggpkg id=12]` or a block in Elementor or the Gutenberg editor.
 
+In the plugin settings, you can optionally restrict `.ggpkg` uploads to users with a specific WordPress capability. This check is disabled by default to preserve previous behavior.
+
 Sample packages can be downloaded from our [forum](https://forum.ggnome.com/viewtopic.php?f=21&t=9025).
+
+### Requirements
+
+- WordPress 5.0 or higher
+- PHP 7.2 or higher
+- PHP zip and libxml extensions
 
 ### Shortcode
 
@@ -28,9 +36,11 @@ When you are using a shortcode to embed a package, you can provide additional pa
 
 - url: can be used instead of ID, to embed a package from a specific URL. Like `[ggpkg url='....']`
 
+- Remote URL security: when using `url`, you can enforce TLS certificate verification and optionally restrict allowed hostnames in the plugin settings.
+
 Example: `[ggpkg id=12 width='100%' height='500px' start_preview='true']`
 
-If you are using the Gutenberg Editor and want to embed a package via a shortcode, use a *Classic Block* from the 'Formatting' section, and use the *Add Media* button to add a package from the media library.
+If you are using the Gutenberg Editor and want to embed a package via a shortcode, use a _Classic Block_ from the 'Formatting' section, and use the _Add Media_ button to add a package from the media library.
 
 ### Gutenberg Block
 
@@ -46,3 +56,11 @@ You can find the Garden Gnome Package Widget in the General section.
 
 In the Widget settings, you can pick a package from the media library, define the height, and select if it should start with a preview image.
 
+### Unpack Troubleshooting
+
+- Use the `Re-extract GGPKG` row action in Media Library list view to retry extraction.
+- Unpack status and errors are shown in package attachment details.
+
+### Tests
+
+WordPress PHPUnit regression tests are included in `tests/`.

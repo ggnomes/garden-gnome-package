@@ -5,14 +5,18 @@
  *
  */
 
-( function(blocks, editor, components, i18n, element) {
+
+( function(blocks, blockEditor, components, i18n, element) {
 	var el = element.createElement;
-	var BlockControls = wp.editor.BlockControls;
-	var InspectorControls = wp.editor.InspectorControls;
-	var CheckboxControl = wp.components.CheckboxControl;
-	var TextControl = wp.components.TextControl;
-	var MediaUpload = editor.MediaUpload;
-	var MediaPlaceholder = editor.MediaPlaceholder;
+	var editorApi = blockEditor || window.wp.editor;
+	if (!editorApi) {
+		return;
+	}
+	var BlockControls = editorApi.BlockControls;
+	var InspectorControls = editorApi.InspectorControls;
+	var CheckboxControl = components.CheckboxControl;
+	var TextControl = components.TextControl;
+	var MediaUpload = editorApi.MediaUpload;
 	var __ = i18n.__;
 
 	const ggpkgIcon = el('svg', {width: 100, height: 100, viewBox: '20 20 260 260'},
@@ -68,7 +72,7 @@
 					attachmentID: media.id,
 				});
 			};
-
+					window.wp.blockEditor || window.wp.editor,
 			var startPreviewChanged = function(value) {
 				return props.setAttributes({
 					startPreview: value

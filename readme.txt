@@ -16,6 +16,8 @@ This plugin provides an easy way to publish panoramas and object movies created 
 
 You can embed a package via a shortcode like `[ggpkg id=12]` or a block in the Gutenberg editor.
 
+In the plugin settings, you can optionally restrict `.ggpkg` uploads to users with a specific WordPress capability. This check is disabled by default to preserve previous behavior.
+
 Sample packages can be downloaded from our [forum](https://forum.ggnome.com/viewtopic.php?f=21&t=9025).
 
 ### Shortcode
@@ -33,6 +35,8 @@ When you are using a shortcode to embed a package, you can provide additional pa
 - start_view: for panoramas and virtual tours, sets the initial view of the first node. The format is 'pan/tilt/fov/projection'. The projection parameter is optional.
 
 - url: can be used instead of ID, to embed a package from a specific URL. Like `[ggpkg url='....']`. This field needs to be enabled in the settings.
+
+- Remote URL security: when using `url`, you can enforce TLS certificate verification and optionally restrict allowed hostnames in the plugin settings.
 
 Example: `[ggpkg id=12 width='100%' height='500px' start_preview='true']`
 
@@ -56,7 +60,9 @@ In the Widget settings, you can pick a package from the media library, define th
 
 ###Requirements:
 
-The [zip](https://www.php.net/manual/en/book.zip.php) and [libxml](https://www.php.net/manual/en/book.libxml.php) PHP module must be installed on your server.
+- WordPress 5.0 or higher
+- PHP 7.2 or higher
+- The [zip](https://www.php.net/manual/en/book.zip.php) and [libxml](https://www.php.net/manual/en/book.libxml.php) PHP module must be installed on your server.
 
 ### Installation:
 1. Upload the plugin files to the `/wp-content/plugins/garden-gnome-package` directory, or install the plugin through the WordPress plugins screen directly.
@@ -82,7 +88,16 @@ There are two strategies without an additional plugin:
 
 - Upload a small version of the tour (i.e., just the start node) and then replace the files in the extracted folder in the upload directory.
 
-### How can contribute?
+### How can I retry unpacking a package?
+
+In the Media Library list view, use the `Re-extract GGPKG` row action on a package attachment.
+
+### Where can I see unpack status and errors?
+
+- Admin notices are shown on Media Library screens after upload/re-extract.
+- Package attachment details include `GGPKG Unpack Status` and `GGPKG Unpack Errors`.
+
+### How can I contribute?
 
 Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome-package).
 
@@ -95,6 +110,15 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 
 ## Changelog
 
+### 2.5.0
+* Added minimum version checks during activation (WordPress 5.0+, PHP 7.2+).
+* Added optional capability-based permission setting for `.ggpkg` uploads (off by default) to address CVE-2026-39683.
+* Updated Gutenberg block editor and Elementor widget registration APIs for improved forward compatibility.
+* Added unpack error reporting in Media Library notices and attachment details.
+* Added per-package unpack status metadata and `Re-extract GGPKG` media action.
+* Added secure remote URL settings for shortcode mode (strict TLS and allowed host list).
+* Added WordPress PHPUnit regression test scaffolding for unpack status/notices and media actions.
+
 ### 2.4.1
 * Added 3d file extensions to the allowed file types for Pano2VR 8 packages.
 
@@ -102,7 +126,7 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 * Added a list of valid file extensions within a package file for security reasons (CVE-2024-12854).
 
 ### 2.3.0
-* *Breaking Change:* Added and option for the url field in the settings, that is off by default for security reasons.
+* *Breaking Change:* Added an option for the url field in the settings, that is off by default for security reasons.
 * Shortcode: Better “url” parameter sanitization
 
 ### 2.2.9

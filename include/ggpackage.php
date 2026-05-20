@@ -29,6 +29,35 @@ class GGPackage {
 	private $viewer;
 	private $filename = "";
 
+	private function remote_strict_ssl_enabled(): bool {
+		$strict_ssl = 'on';
+		if ( isset( $this->viewer ) && isset( $this->viewer->options ) ) {
+			$strict_ssl = $this->viewer->options['strict_remote_ssl'] ?? 'on';
+		}
+
+		return ( $strict_ssl === 'on' || $strict_ssl === true || $strict_ssl === 1 || $strict_ssl === '1' );
+	}
+
+	private function remote_host_allowed( string $url ): bool {
+		$host = strtolower( (string) parse_url( $url, PHP_URL_HOST ) );
+		if ( $host === '' ) {
+			return false;
+		}
+
+		$hosts_setting = '';
+		if ( isset( $this->viewer ) && isset( $this->viewer->options ) ) {
+			$hosts_setting = (string) ( $this->viewer->options['remote_url_allowed_hosts'] ?? '' );
+		}
+		$allowed_hosts = array_values( array_filter( array_map( 'trim', explode( ',', strtolower( $hosts_setting ) ) ) ) );
+		$allowed_hosts = apply_filters( 'ggpkg_remote_url_allowed_hosts', $allowed_hosts, $url );
+
+		if ( empty( $allowed_hosts ) ) {
+			return true;
+		}
+
+		return in_array( $host, $allowed_hosts, true );
+	}
+
 	public function __construct( $viewer = null, $attachmentID = null ) {
 		$this->viewer = $viewer;
 		if ( isset( $viewer ) && isset( $viewer->options ) ) {
@@ -97,22 +126,43 @@ class GGPackage {
 		$this->remote_url      = $url;
 		$this->attachment_url  = "";
 		$this->attachment_file = "";
+
+		if ( ! $this->remote_host_allowed( $url ) ) {
+			return false;
+		}
+
 		$remote_json_file      = $url . "gginfo.json";
 		$transient             = 'ggexurl_' . md5( $url );
 		$json_response         = get_transient( $transient );
+		$request_args          = array(
+			'sslverify' => $this->remote_strict_ssl_enabled(),
+			'timeout'   => 15,
+		);
 
 		if ( false === $json_response ) {
 			// Transient expired, refresh the data
-			$json_response = wp_remote_get( $remote_json_file, [ 'sslverify' => false ] );
+			$json_response = wp_remote_get( $remote_json_file, $request_args );
+			if ( is_wp_error( $json_response ) ) {
+				set_transient( $transient, $json_response, 60 );
+
+				return false;
+			}
 			$code          = wp_remote_retrieve_response_code( $json_response );
 			set_transient( $transient, $json_response, ( $code == "200" ) ? 3600 : 60 );
 		} else {
+			if ( is_wp_error( $json_response ) ) {
+				return false;
+			}
 			$code = wp_remote_retrieve_response_code( $json_response );
 		}
 		$json_content = wp_remote_retrieve_body( $json_response );
 		if ( $code == "200" ) {
 			$this->parse_gginfo_json( $json_content );
+
+			return true;
 		}
+
+		return false;
 	}
 
 	public function file_in_package( $file ) {

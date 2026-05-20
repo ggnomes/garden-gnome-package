@@ -16,7 +16,7 @@ class Elementor_GGPKG_Widget extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-image';;
+		return 'eicon-image';
 	}
 
 	public function get_categories() {
@@ -24,6 +24,10 @@ class Elementor_GGPKG_Widget extends Widget_Base {
 	}
 
 	protected function _register_controls() {
+		$this->register_controls();
+	}
+
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'content_section',
