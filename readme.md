@@ -60,7 +60,3 @@ In the Widget settings, you can pick a package from the media library, define th
 
 - Use the `Re-extract GGPKG` row action in Media Library list view to retry extraction.
 - Unpack status and errors are shown in package attachment details.
-
-### Tests
-
-WordPress PHPUnit regression tests are included in `tests/`.

@@ -117,7 +117,6 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 * Added unpack error reporting in Media Library notices and attachment details.
 * Added per-package unpack status metadata and `Re-extract GGPKG` media action.
 * Added secure remote URL settings for shortcode mode (strict TLS and allowed host list).
-* Added WordPress PHPUnit regression test scaffolding for unpack status/notices and media actions.
 
 ### 2.4.1
 * Added 3d file extensions to the allowed file types for Pano2VR 8 packages.

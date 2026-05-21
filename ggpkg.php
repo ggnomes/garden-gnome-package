@@ -81,7 +81,7 @@ class GGPackageViewer {
 				$this->options["file_extensions"] = "";
 			}
 			if ( ! isset( $this->options['require_upload_capability'] ) ) {
-				$this->options['require_upload_capability'] = false;
+				$this->options['require_upload_capability'] = true; // Default to enabled
 			}
 			if ( ! isset( $this->options['upload_capability'] ) || $this->options['upload_capability'] === '' ) {
 				$this->options['upload_capability'] = 'upload_ggpkg';
