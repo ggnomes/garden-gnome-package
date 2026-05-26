@@ -20,7 +20,7 @@
  * Plugin Name: Garden Gnome Package
  * Plugin URI:  https://ggnome.com/ggpkg
  * Description: Import Pano2VR & Object2VR Content into Wordpress.
- * Version:     2.5.0
+ * Version:     2.5.1
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author:      <a href="https://ggnome.com">Garden Gnome Software</a>
@@ -136,7 +136,7 @@ class GGPackageViewer {
 		$this->options['object2vr_player_version'] = "package";
 		$this->options['file_extensions']          = "";
 		$this->options['allow_url_shortcode']      = false;
-		$this->options['require_upload_capability'] = false;
+		$this->options['require_upload_capability'] = true;
 		$this->options['upload_capability']         = 'upload_ggpkg';
 		$this->options['strict_remote_ssl']         = 'on';
 		$this->options['remote_url_allowed_hosts']  = '';
@@ -388,11 +388,11 @@ class GGPackageViewer {
 						</td>
 						<td>
 							<input id="ggsw_require_upload_capability" name="ggsw_require_upload_capability" type="checkbox"
-						       <?php if ( $this->options['require_upload_capability'] ?? false ) : ?>checked<?php endif; ?> /><?php _e( 'Only allow GGPKG uploads for users with this capability:', 'ggpkg' ); ?>
+							       <?php if ( $this->options['require_upload_capability'] ?? true ) : ?>checked<?php endif; ?> /><?php _e( 'Only allow GGPKG uploads for users with this capability:', 'ggpkg' ); ?>
 							<input id="ggsw_upload_capability" name="ggsw_upload_capability" type="text"
-								   value="<?php echo esc_attr( $this->options['upload_capability'] ?? 'upload_ggpkg' ); ?>"
+										   value="<?php echo esc_attr( $this->options['upload_capability'] ?? 'upload_ggpkg' ); ?>"
 								   class="regular-text"/>
-							<p class="description"><?php _e( 'Off by default to preserve existing behavior. Example capability: <code>upload_ggpkg</code>', 'ggpkg' ); ?></p>
+									<p class="description"><?php _e( 'Enabled by default. Default capability: <code>upload_ggpkg</code>', 'ggpkg' ); ?></p>
 						</td>
 					</tr>
                     <tr>
@@ -910,7 +910,7 @@ class GGPackageViewer {
 	}
 
 	public function media_row_actions( $actions, $post ) {
-		if ( ! $this->attachment_is_package( $post->ID ) || ! current_user_can( 'upload_files' ) ) {
+		if ( ! $this->attachment_is_package( $post->ID ) || ! $this->can_user_upload_ggpkg() ) {
 			return $actions;
 		}
 
@@ -927,9 +927,6 @@ class GGPackageViewer {
 	public function handle_reextract_action() {
 		if ( ! is_admin() || ! isset( $_GET['action'] ) || $_GET['action'] !== 'ggpkg_reextract' ) {
 			return;
-		}
-		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_die( esc_html__( 'You are not allowed to re-extract this package.', 'ggpkg' ) );
 		}
 		if ( ! $this->can_user_upload_ggpkg() ) {
 			wp_die( esc_html__( 'You do not have permission to manage GGPKG extraction.', 'ggpkg' ) );

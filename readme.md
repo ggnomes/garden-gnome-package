@@ -10,7 +10,7 @@ This plugin provides an easy way to publish panoramas and object movies created 
 
 You can embed a package via a shortcode like `[ggpkg id=12]` or a block in Elementor or the Gutenberg editor.
 
-In the plugin settings, you can optionally restrict `.ggpkg` uploads to users with a specific WordPress capability. This check is disabled by default to preserve previous behavior.
+In the plugin settings, you can restrict `.ggpkg` uploads to users with a specific WordPress capability. This check is enabled by default and uses `upload_ggpkg` unless you change it.
 
 Sample packages can be downloaded from our [forum](https://forum.ggnome.com/viewtopic.php?f=21&t=9025).
 

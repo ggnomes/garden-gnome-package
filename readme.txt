@@ -2,7 +2,7 @@
 Contributors: Ggnomes
 Tags: panorama, virtual tour, webvr, webxr, 360
 Requires at least: 5.0
-Tested up to: 6.9.0
+Tested up to: 7.0
 Stable tag: trunk
 Requires PHP: 7.2
 License: GPLv2 or later
@@ -16,7 +16,7 @@ This plugin provides an easy way to publish panoramas and object movies created 
 
 You can embed a package via a shortcode like `[ggpkg id=12]` or a block in the Gutenberg editor.
 
-In the plugin settings, you can optionally restrict `.ggpkg` uploads to users with a specific WordPress capability. This check is disabled by default to preserve previous behavior.
+In the plugin settings, you can restrict `.ggpkg` uploads to users with a specific WordPress capability. This check is enabled by default and uses `upload_ggpkg` unless you change it.
 
 Sample packages can be downloaded from our [forum](https://forum.ggnome.com/viewtopic.php?f=21&t=9025).
 
@@ -112,7 +112,7 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 
 ### 2.5.0
 * Added minimum version checks during activation (WordPress 5.0+, PHP 7.2+).
-* Added optional capability-based permission setting for `.ggpkg` uploads (off by default) to address CVE-2026-39683.
+* Added capability-based permission setting for `.ggpkg` uploads (enabled by default, capability defaults to `upload_ggpkg`) to address CVE-2026-39683.
 * Updated Gutenberg block editor and Elementor widget registration APIs for improved forward compatibility.
 * Added unpack error reporting in Media Library notices and attachment details.
 * Added per-package unpack status metadata and `Re-extract GGPKG` media action.
