@@ -110,9 +110,13 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 
 ## Changelog
 
+### 2.5.1
+
+* Capability check to for `.ggpkg` uploads is now on by default
+
 ### 2.5.0
 * Added minimum version checks during activation (WordPress 5.0+, PHP 7.2+).
-* Added capability-based permission setting for `.ggpkg` uploads (enabled by default, capability defaults to `upload_ggpkg`) to address CVE-2026-39683.
+* Added optional capability-based permission setting for `.ggpkg` uploads (off by default) to address CVE-2026-39683.
 * Updated Gutenberg block editor and Elementor widget registration APIs for improved forward compatibility.
 * Added unpack error reporting in Media Library notices and attachment details.
 * Added per-package unpack status metadata and `Re-extract GGPKG` media action.
