@@ -110,6 +110,10 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 
 ## Changelog
 
+### 2.5.2
+
+* Capability check to for `.ggpkg` uploads is ignored for admins
+
 ### 2.5.1
 
 * Capability check to for `.ggpkg` uploads is now on by default
