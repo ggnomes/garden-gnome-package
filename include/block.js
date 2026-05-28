@@ -72,7 +72,7 @@
 					attachmentID: media.id,
 				});
 			};
-					window.wp.blockEditor || window.wp.editor,
+
 			var startPreviewChanged = function(value) {
 				return props.setAttributes({
 					startPreview: value
@@ -157,7 +157,7 @@
 	})
 })(
 	window.wp.blocks,
-	window.wp.editor,	
+	window.wp.blockEditor || window.wp.editor,
 	window.wp.components,
 	window.wp.i18n,
 	window.wp.element

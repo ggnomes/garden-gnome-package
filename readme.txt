@@ -110,6 +110,10 @@ Please submit a pull request on [GitHub](https://github.com/ggnomes/garden-gnome
 
 ## Changelog
 
+### 2.5.3
+
+* Fix Gutenberg block registration in the editor.
+
 ### 2.5.2
 
 * Capability check to for `.ggpkg` uploads is ignored for admins
